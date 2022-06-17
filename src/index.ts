@@ -14,15 +14,13 @@ app.use(express.json());
 // * Add headers
 app.use((req, res, next) => {
   res.charset = 'utf-8';
-  const allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:3000', 'http://127.0.0.1:9000', 'http://localhost:9000'];
+  const allowedOrigins = ['http://127.0.0.1:3001', 'http://localhost:3001'];
   const origin = req.headers.origin ?? '';
   // Website you wish to allow to connect
-  console.log('req.headers', req.headers);
-  console.log('origin', origin);
   if (allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
-  // res.setHeader('Access-Control-Allow-Origin', '*');
+  // res.setHeader('Access-Control-Allow-Origin', 'http://example.com');
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   // Request headers you wish to allow
