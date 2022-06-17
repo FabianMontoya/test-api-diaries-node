@@ -13,6 +13,7 @@ app.set('port', PORT);
 app.use(express.json());
 
 // * Add headers
+app.use(middlewares.headers.VerifyRequestHeaders);
 app.use(middlewares.headers.SetResponseHeaders);
 
 // * Routes
