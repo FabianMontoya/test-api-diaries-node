@@ -19,7 +19,7 @@ app.use((req, res, next) => {
   const allowedOrigins = getAllowedOrigins();
   const origin = req.headers.origin ?? '';
   const originIP = req.headers['x-forwarded-for'] ?? '127.0.0.1';
-  console.log('[req.headers]: ', req.headers);
+  // console.log('[req.headers]: ', req.headers);
   console.log('[origin]: ', origin);
   console.log('[originIP]: ', originIP);
   console.log('[allowedOrigins]: ', allowedOrigins);
