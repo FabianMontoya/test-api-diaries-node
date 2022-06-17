@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import { getAllowedOrigins } from '../utils/cors';
+import { LOCAL_ORIGIN_IP } from '../consts';
 
 export const VerifyRequestHeaders = (req: Request, res: Response, next: NextFunction): void => {
   const origin = req.headers.origin ?? '';
-  const originIP = req.headers['x-forwarded-for'] ?? '127.0.0.1';
+  const originIP = req.headers['x-forwarded-for'] ?? LOCAL_ORIGIN_IP;
 
   if (origin.length === 0) {
     res.status(403).json({ code: 403, error: true, message: 'Forbidden: required request headers missing' });

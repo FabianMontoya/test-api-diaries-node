@@ -11,17 +11,28 @@ app.set('port', PORT);
 
 // * Middlewares
 app.use(express.json());
+app.use(middlewares.headers.VerifyRequestHeaders);
 
 // * Add headers
-app.use(middlewares.headers.VerifyRequestHeaders);
 app.use(middlewares.headers.SetResponseHeaders);
 
 // * Routes
-app.get('/ping', (_req, res) => {
+const router = express.Router();
+
+// this is for the root path and addmit all the options request for the cors
+router.options('*', (_req, res) => {
+  res.sendStatus(200);
+});
+
+router.use('/ping', (_req, res) => {
   res.send('pong');
 });
 
-app.use('/api/diaries', diariesRoute);
+router.use('/diaries', diariesRoute);
+// app.use('/diaries', diariesRoute); // Consume how: localhost:[port]/diaries
+
+// * Init default path
+app.use('/api/v1', router); // Consume how: localhost:[port]/api/v1/[route_path]
 
 // * 404 Not Found Middleware
 app.use((req, res) => {
