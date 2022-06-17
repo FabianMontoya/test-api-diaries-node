@@ -34,8 +34,8 @@ const toNewDiaryEntry = (entry: any): NewDiaryEntry => {
   const newEntry: NewDiaryEntry = {
     comments: parseComment(entry.comments),
     date: parseDate(entry.date),
-    weather: parseWeather(entry.date),
-    visibility: parseVisibility(entry.date)
+    weather: parseWeather(entry.weather),
+    visibility: parseVisibility(entry.visibility)
   };
 
   return newEntry;
