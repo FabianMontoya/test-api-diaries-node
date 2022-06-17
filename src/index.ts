@@ -1,5 +1,6 @@
 import express from 'express';
 import diariesRoute from './routes/diaries';
+import { getAllowedOrigins } from './utils/cors';
 
 // * Init express
 const app = express();
@@ -14,13 +15,20 @@ app.use(express.json());
 // * Add headers
 app.use((req, res, next) => {
   res.charset = 'utf-8';
-  const allowedOrigins = ['http://127.0.0.1:3001', 'http://localhost:3001'];
+
+  const allowedOrigins = getAllowedOrigins();
   const origin = req.headers.origin ?? '';
+  const originIP = req.headers['x-forwarded-for'] ?? '127.0.0.1';
+  console.log('[req.headers]: ', req.headers);
+  console.log('[origin]: ', origin);
+  console.log('[originIP]: ', originIP);
+  console.log('[allowedOrigins]: ', allowedOrigins);
+
   // Website you wish to allow to connect
-  if (allowedOrigins.includes(origin)) {
+  if (allowedOrigins.length > 0 && allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
-  // res.setHeader('Access-Control-Allow-Origin', 'http://example.com');
+  // res.setHeader('Access-Control-Allow-Origin', '*');
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   // Request headers you wish to allow
@@ -34,7 +42,6 @@ app.use((req, res, next) => {
 
 // * Routes
 app.get('/ping', (_req, res) => {
-  console.log('someone pinged');
   res.send('pong');
 });
 

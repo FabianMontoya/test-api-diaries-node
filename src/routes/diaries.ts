@@ -5,17 +5,14 @@ import { toNewDiaryEntry } from '../adapters/diary.adapter';
 const router = express.Router();
 
 router.get('/', (_req, res) => {
-  console.log('getDiariesWitOutSentiveInfo');
   res.json(diaryServices.getDiariesWitOutSentiveInfo());
 });
 
 router.get('/all', (_req, res) => {
-  console.log('getDiariesWitAllInfo');
   res.json(diaryServices.getDiaries());
 });
 
 router.get('/:id', (req, res) => {
-  console.log('getDiaries', req.params.id);
   const diary = diaryServices.findById(Number(req.params.id));
   if (diary != null) {
     res.json(diary);
