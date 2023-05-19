@@ -11,10 +11,11 @@ app.set('port', PORT);
 
 // * Middlewares
 app.use(express.json());
-app.use(middlewares.headers.VerifyRequestHeaders);
+// app.use();
 
 // * Add headers
 app.use(middlewares.headers.SetResponseHeaders);
+// app.use(middlewares.headers.VerifyRequestHeaders);
 
 // * Routes
 const router = express.Router();
@@ -27,12 +28,15 @@ router.options('*', (_req, res) => {
 router.use('/ping', (_req, res) => {
   res.send('pong');
 });
+/* app.use('/api/ping', (_req, res) => {
+  res.send('pong');
+}); */
 
-router.use('/diaries', diariesRoute);
+router.use('/diaries', middlewares.headers.VerifyRequestHeaders, diariesRoute);
 // app.use('/diaries', diariesRoute); // Consume how: localhost:[port]/diaries
 
 // * Init default path
-app.use('/api/v1', router); // Consume how: localhost:[port]/api/v1/[route_path]
+app.use('/api', router); // Consume how: localhost:[port]/api/[route_path]
 
 // * 404 Not Found Middleware
 app.use((req, res) => {
