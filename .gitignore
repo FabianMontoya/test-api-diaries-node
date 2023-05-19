@@ -1,6 +1,5 @@
 node_modules
 build
-api
 *.local
 *.log
 
